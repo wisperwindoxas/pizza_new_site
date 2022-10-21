@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Product</title>
+</head>
+<body>
+    <style>
+        .wrapper{
+            width: 800px;
+            padding: 20px;
+            margin: 100px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #categories select{
+            padding: 10px;
+            width: 420px;
+            font-size: 18px;
+        }
+
+        input{
+            width: 400px;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .send{
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 10px;
+            background-color: rgb(11, 117, 230);
+            margin-top: 40px;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="wrapper">
+        <div id="categories">
+            <h3> Ввыбирите Категория</h3>
+            <select name="" >
+                <option value="phone">Телефон</option>
+                <option value="television">Телевизор</option>
+                <option value="fridge">Холоделник</option>
+                <option value="furniture">Мебель</option>
+            </select>
+      </div>
+
+      <div>
+        <h3>Фото продукть</h3>
+        <input type="url" name="" id="img">
+      </div>
+      <div>
+        <h3>Имя продукть</h3>
+        <input type="text" name="" id="productName">
+      </div>
+      <div>
+        <h3>Цена продукть</h3>
+        <input type="number" name="" id="price"></div>
+      <div>
+        <h3>доп инфо о продукть</h3>
+        <input type="text" name="" id="aboutPhone"></div>
+      
+      
+      
+
+      <button class="send">Отправить</button>
+
+
+    </div>
+
+
+    <script>
+        let categories = document.querySelector('#categories select')
+        let img = document.querySelector('#img')
+        let productName = document.querySelector('#productName')
+        let price = document.querySelector('#price')
+        let aboutPhone = document.querySelector('#aboutPhone')
+        let send = document.querySelector('.send')
+
+
+       
+        categories.addEventListener('change', () =>{
+           send.addEventListener('click', async () =>{
+            let data = {
+                img:img.value,
+                productName: productName.value,
+                price:price.value,
+                aboutPhone: aboutPhone.value
+            }
+
+           await fetch(`http://localhost:3004/${categories.value}`,{
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            })
+
+            img.value = ""
+            productName.value = ""
+            price.value = ""
+            aboutPhone.value = ""
+           })
+            
+
+        })
+    
+    </script>
+</body>
+</html>
